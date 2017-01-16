@@ -8,7 +8,7 @@
 	<input type="button" name="save_btn" id="save_btn" value="Save" onclick="save_room()">
 	<select id="select_room"></select>
 
-
+	<label id="label"></label>
 	<script type="text/javascript">
 
 	// Create DOM Elements
@@ -16,12 +16,12 @@
 	var select_room = document.getElementById('select_room');
 
 	var save_btn = document.getElementById('save_btn');
+	var label = document.getElementById('label');
 
 	var array = [];
 
 	function save_room() {
 		// body...
-
 		// Save the text from the textbox to the array
 		var room = chat_room.value;
 		array.push(room);
@@ -32,7 +32,14 @@
 		select_room.append(option);
 
 		// Clear the textbox
-		chat_room.innerHTML = "";
+		chat_room.value = "";
+
+		label.innerHTML = select_room.value;
+	}
+
+	select_room.onchange = function () {
+		// body...
+		label.innerHTML = select_room.value;
 	}
 	</script>
 </body>
