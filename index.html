@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sample Chat App</title>
+</head>
+<body>
+	<input type="text" name="chat_room" id="chat_room" />
+	<input type="button" name="save_btn" id="save_btn" value="Save" onclick="save_room()">
+	<select id="select_room"></select>
+
+
+	<script type="text/javascript">
+
+	// Create DOM Elements
+	var chat_room = document.getElementById('chat_room');
+	var select_room = document.getElementById('select_room');
+
+	var save_btn = document.getElementById('save_btn');
+
+	var array = [];
+
+	function save_room() {
+		// body...
+
+		// Save the text from the textbox to the array
+		var room = chat_room.value;
+		array.push(room);
+
+		// Append the newly created chat room to the select list
+		var option = document.createElement('option');
+		option.innerHTML = room;
+		select_room.append(option);
+
+		// Clear the textbox
+		chat_room.innerHTML = "";
+	}
+	</script>
+</body>
+</html>
