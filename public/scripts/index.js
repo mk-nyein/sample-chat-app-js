@@ -12,13 +12,9 @@
 	const auth = firebase.auth();
 	const database = firebase.database();
 	const storage = firebase.storage();
-	  // Initiates Firebase auth and listen to auth state changes.
+// Initialize Firebase 
 
-
-
-	
-	// Create DOM Elements
-
+// Create DOM Elements
 	var anonymous_btn = document.getElementById('anonymous_btn');
 	var sign_in_btn = document.getElementById('sign_in_btn');
 	var sign_up_btn = document.getElementById('sign_up_btn');
@@ -34,19 +30,20 @@
 	var display_msg = document.getElementById('display_msg');
 	var text_msg = document.getElementById('text_msg');
 	var send_msg = document.getElementById('send_msg');
+// Create DOM Elements
 
-	// var togglefun = toggleButton();
-	// text_msg.addEventListener('change', togglefun);
-
+// Custom variables
 	var array = [];
-	var user = '';
+	var guser = '';
+	var messagesRef = database.ref();
+// Custom variables
 
-
-	// Create State change
+// Create State change
 	auth.onAuthStateChanged(function (user) {
 		// body...
 		if(user){
-			user = user;
+			guser = user;
+	console.log('on auth state change '+ guser);
 			log_out_btn.removeAttribute('hidden');
 			sign_in_btn.setAttribute('hidden', 'true');
 			sign_up_btn.setAttribute('hidden', 'true');
@@ -55,7 +52,7 @@
 
 	        loadMessages();
 		} else {
-			user = '';
+			guser = '';
 			log_out_btn.setAttribute('hidden', 'true');
 			sign_in_btn.removeAttribute('hidden');
 			sign_up_btn.removeAttribute('hidden');
@@ -66,7 +63,8 @@
 
 	auth.checkSignedInWithMessage = function  () {
 		// body...
-		if (auth.currentUser) {
+	console.log('check sign in msg '+ guser);
+		if (guser) {
 		    return true;
 		}
 		var data = {
@@ -76,7 +74,7 @@
     	return false;
 	};
 
-	// User authentication functions
+// User authentication functions
 	anonymous_btn.onclick = function () {
 		// body...
 		console.log('sign in');
@@ -95,12 +93,12 @@
 	    var provider = new firebase.auth.GoogleAuthProvider();
 	    auth.signInWithPopup(provider);
 	};
-
-
+// User authentication functions
 
 	// Create the chatroom add function
 	function save_room() {
 		// body...
+		console.log('...');
 		if(chat_room.value && auth.currentUser){
 			// Save the text from the textbox to the array
 			var room = chat_room.value;
@@ -125,11 +123,13 @@
 		// body...
 		label.innerHTML = select_room.value;
 
-		// if(user){
+		if(guser){
 			console.log('display some msg');
-		// } else {
-		// 	alert('login first');
-		// }
+			display_msg.innerHTML = "";
+			loadMessages();
+		} else {
+			alert('login first');
+		}
 	};
 
 	send_msg.onclick = function  () {
@@ -137,9 +137,9 @@
 		if(auth.checkSignedInWithMessage()){
 
 			console.log('user exist');
-			var currentUser = user;
+			var currentUser = guser;
 	        // Add a new message entry to the Firebase Database.
-	        database.ref().push({
+	        messagesRef.push({
 	            text: text_msg.value
 	        }).then(function() {
 	            // Clear message text field and SEND button state.
@@ -156,18 +156,19 @@
 
 	function loadMessages() {
 		// body...
-        this.messagesRef = database.ref();
+        messagesRef = database.ref().child(select_room.value);
+        console.log('current db '+ messagesRef);
 	    // Make sure we remove all previous listeners.
-	    this.messagesRef.off();
+	    messagesRef.off();
 
 	    // Loads the last 12 messages and listen for new ones.
 	    var setMessage = function(data) {
 	        var val = data.val();
 	        displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl);
 	    }.bind(this);
-	    this.messagesRef.limitToLast(12).on('child_added', setMessage);
-	    this.messagesRef.limitToLast(12).on('child_removed', setMessage);
-	    this.messagesRef.limitToLast(12).on('child_changed', setMessage);
+	    messagesRef.limitToLast(12).on('child_added', setMessage);
+	    messagesRef.limitToLast(12).on('child_removed', setMessage);
+	    messagesRef.limitToLast(12).on('child_changed', setMessage);
 	}
 
 
@@ -200,7 +201,6 @@
 	        delbtn.onclick = function(){
 	            db.remove();
 	            document.getElementById(key).remove();
-	            
 	        }
 
 	        //update btn 
