@@ -60,6 +60,17 @@
         border: 1px solid;
         height: 500px;
       }
+      #image-form #submitImage {
+        width: auto;
+        padding: 0 6px 0 1px;
+        min-width: 0;
+      }
+      #image-form #submitImage .material-icons {
+        top: -1px;
+      }
+      #mediaCapture {
+        display: none;
+      }
     </style>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -77,20 +88,9 @@
       </button> -->
       <a class="navbar-brand" href="#">Sample Chat</a>
 
-      <!-- For the pages  -->
+      <!-- For the pages or links in menu bar -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>-->
-
+        
           <button class="btn btn-outline-info my-2 my-sm-0" type="input" id="anonymous_btn">Login Anonymously</button>
           <button class="btn btn-outline-success my-2 my-sm-0" type="input" id="google_btn">Sign In With Google</button>
           <button class="btn btn-outline-success my-2 my-sm-0" type="input" id="sign_in_btn">Sign In</button>
@@ -117,6 +117,15 @@
       <div id="type_msg" class="col col-lg-12">
         <input type="text" name="text_msg" id="text_msg" class="col col-lg-8" placeholder="Message"> 
         <button type="input" value="Send" id="send_msg" class="col col-lg-2" align="right">Send</button>
+        <button type="input" value="Image" id="send_img" class="col col-lg-2" align="right">Image</button>
+
+        <form id="image-form" action="#">
+            <input id="mediaCapture" type="file" accept="image/*,capture=camera">
+            <button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+                <i class="material-icons">image</i>
+            </button>
+        </form>
+
       </div>
     </div>
 </div>

@@ -30,6 +30,9 @@
 	var display_msg = document.getElementById('display_msg');
 	var text_msg = document.getElementById('text_msg');
 	var send_msg = document.getElementById('send_msg');
+	var send_msg = document.getElementById('send_msg');
+	var mediaCapture = document.getElementById('mediaCapture');
+	var submitImage = document.getElementById('submitImage');
 // Create DOM Elements
 
 // Custom variables
@@ -38,7 +41,7 @@
 	var messagesRef = database.ref();
 // Custom variables
 
-// Create State change
+// Create State change and check user login
 	auth.onAuthStateChanged(function (user) {
 		// body...
 		if(user){
@@ -73,6 +76,7 @@
 	    };
     	return false;
 	};
+// Create State change and check user login
 
 // User authentication functions
 	anonymous_btn.onclick = function () {
@@ -95,7 +99,7 @@
 	};
 // User authentication functions
 
-	// Create the chatroom add function
+// Create the new chatroom save function
 	function save_room() {
 		// body...
 		console.log('...');
@@ -117,8 +121,9 @@
 			alert('enter something or login first');
 		}
 	}
+// Create the new chatroom save function
 
-	// Create for the chatroom change
+// Create for the chatroom change
 	select_room.onchange = function () {
 		// body...
 		label.innerHTML = select_room.value;
@@ -131,7 +136,9 @@
 			alert('login first');
 		}
 	};
+// Create for the chatroom change
 
+// Sending message or image
 	send_msg.onclick = function  () {
 		// body...
 		if(auth.checkSignedInWithMessage()){
@@ -153,7 +160,72 @@
 		}
 	};
 
+	send_img.onclick = function  () {
+		// body...
+		mediaCapture.click();
+	}
+	mediaCapture.onchange = function  () {
+		// body...
+		saveImageMessage();
+	}
+	
+	// setImageUrl = function(imageUri, imgElement) {
+	//     // If the image is a Firebase Storage URI we fetch the URL.
+	//     if (imageUri.startsWith('gs://')) {
+	//         imgElement.src = test.LOADING_IMAGE_URL; // Display a loading image first.
+	//         this.storage.refFromURL(imageUri).getMetadata().then(function(metadata) {
+	//             imgElement.src = metadata.downloadURLs[0];
+	//         });
+	//     } else {
+	//         imgElement.src = imageUri;
+	//     }
+	// };//setImageUrl function end
 
+	// // Saves a new message containing an image URI in Firebase.
+	// // This first saves the image in Firebase storage.
+	// saveImageMessage = function(event) {
+	//     var file = event.target.files[0];
+	//     // Clear the selection in the file picker input.
+	//     this.imageForm.reset();
+
+	//     // Check if the file is an image.
+	//     if (!file.type.match('image.*')) {
+	//         var data = {
+	//             message: 'You can only share images',
+	//             timeout: 2000
+	//         };
+	//         this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
+	//         return;
+	//     }
+
+	//     // Check if the user is signed-in
+	//     if (this.checkSignedInWithMessage()) {
+
+	//         // We add a message with a loading icon that will get updated with the shared image.
+	//         var currentUser = this.auth.currentUser;
+	//         this.messagesRef.push({
+	//             name: currentUser.displayName,
+	//             imageUrl: test.LOADING_IMAGE_URL,
+	//             photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
+	//         }).then(function(data) {
+
+	//         // Upload the image to Firebase Storage.
+	//         this.storage.ref(currentUser.uid + '/' + Date.now() + '/' + file.name)
+	//         .put(file, {contentType: file.type})
+	//         .then(function(snapshot) {
+	//             // Get the file's Storage URI and update the chat message placeholder.
+	//             var filePath = snapshot.metadata.fullPath;
+	//             data.update({imageUrl: this.storage.ref(filePath).toString()});
+	//         }.bind(this)).catch(function(error) {
+	//             console.error('There was an error uploading a file to Firebase Storage:', error);
+	//         });
+	//         }.bind(this));
+	//     }
+	// };//saveImageMessage function end
+
+// Sending message or image
+
+// Display messages functions
 	function loadMessages() {
 		// body...
         messagesRef = database.ref().child(select_room.value);
@@ -170,7 +242,6 @@
 	    messagesRef.limitToLast(12).on('child_removed', setMessage);
 	    messagesRef.limitToLast(12).on('child_changed', setMessage);
 	}
-
 
 	// Template for messages.
 	MESSAGE_TEMPLATE =
@@ -301,18 +372,12 @@
 	    display_msg.scrollTop = display_msg.scrollHeight;
 	    text_msg.focus();
 	};//display message function
-
-
+// Display messages functions
 
 	// Create for textbox is empty or not
 	$(text_msg).keyup(function() {
 		toggleButton();
 	});
-
-
-
-
-
 
 	// Resets the given MaterialTextField.
 	resetMaterialTextfield = function(element) {
