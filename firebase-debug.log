@@ -1,0 +1,14 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/bin/nodejs /usr/bin/firebase serve
+[debug] CLI Version:  3.2.0
+[debug] Platform:     linux
+[debug] Node Version: v4.2.6
+[debug] Time:         Tue Jan 17 2017 10:53:31 GMT+0630 (MMT)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /home/mknyein/ruby_on_rails/test/repo_firebase/sample-chat-app-js
+[info] Public Directory: public
+[info] 
+[info] Server listening at: http://localhost:5000
