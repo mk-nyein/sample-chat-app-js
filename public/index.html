@@ -55,21 +55,78 @@
         font-size: 14px;
         box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
       }
+
+      #display_msg{
+        border: 1px solid;
+        height: 500px;
+      }
     </style>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
   </head>
+
   <body>
-  <div id="message">
-    <input type="text" name="chat_room" id="chat_room" />
-    <input type="button" name="save_btn" id="save_btn" value="Save" onclick="save_room()">
-    <select id="select_room"></select>
 
-    <label id="label"></label>
-  </div>
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+<!--       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button> -->
+      <a class="navbar-brand" href="#">Sample Chat</a>
 
-  <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+      <!-- For the pages  -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>-->
+
+          <button class="btn btn-outline-info my-2 my-sm-0" type="input" id="anonymous_btn">Login Anonymously</button>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="input" id="google_btn">Sign In With Google</button>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="input" id="sign_in_btn">Sign In</button>
+          <button class="btn btn-outline-primary my-2 my-sm-0" type="input" id="sign_up_btn">Sign Up</button>
+          <button hidden class="btn btn-outline-warning my-2 my-sm-0" type="input" id="log_out_btn">Log Out</button>
+        </div>
+    </nav>
 
 
-<script src="scripts/index.js"></script>
+    <div id="message">
+      <input type="text" name="chat_room" id="chat_room" />
+      <input type="button" name="save_btn" id="save_btn" value="Save" onclick="save_room()">
+      <select id="select_room">
+        <option value="global">Global</option>
+      </select>
+      <label id="label"></label>
+    </div>
+
+<div class="container col col-lg-6 col-lg-offset-3">
+    <div id="message_box">
+      <div id="display_msg" class="col col-lg-12">
+      msgs will show here
+      </div>
+      <div id="type_msg" class="col col-lg-12">
+        <input type="text" name="text_msg" id="text_msg" class="col col-lg-8" placeholder="Message"> 
+        <button type="input" value="Send" id="send_msg" class="col col-lg-2" align="right">Send</button>
+      </div>
+    </div>
+</div>
+
+<div class="col col-lg-offset-3"></div>
+    <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+
+
+    <script src="scripts/index.js"></script>
   
-</body>
+  </body>
 </html>
+
